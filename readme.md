@@ -1,3 +1,5 @@
+[![License](https://img.shields.io/badge/License-BSD%203--Clause-blue.svg)](https://opensource.org/licenses/BSD-3-Clause)
+
 ## ROS beginner tutorials
 
 The code in this repository is based on the ros beginner tutorials found in its wiki from here http://wiki.ros.org/ROS/Tutorials/NavigatingTheFilesystem.
