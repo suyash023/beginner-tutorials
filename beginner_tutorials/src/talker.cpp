@@ -71,7 +71,7 @@ int main(int argc, char **argv) {
     std_msgs::String msg;
 
     std::stringstream ss;
-    ss << "Hello to everyone in 808x! " << count;
+    ss << "Hello to everyone in ENPM 808X! " << count;
     msg.data = ss.str();
 
     ROS_INFO("%s", msg.data.c_str());
