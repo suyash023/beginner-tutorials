@@ -70,10 +70,20 @@ int main(int argc, char **argv) {
    * NodeHandle destructed will close down the node.
    */
   ros::NodeHandle n;
+  /**
+   * Declaration of the client on the talker side to receive the updated string through request response
+   * paradigm of the server to modify the string
+   */
   ros::ServiceClient client = n.serviceClient<beginner_tutorials::
                               change_string>("change_string");
+  /**
+   * Decalaration of the service obj with request and response as in the srv file
+   */
   beginner_tutorials::change_string srv;
   ROS_INFO_STREAM("Frequency is: " << atoi(argv[1]));
+  /**
+   * Get frequency of talker as a command line argument.
+   */
   frequency = atoi(argv[1]);
   /**
    * The advertise() function is how you tell ROS that you want to

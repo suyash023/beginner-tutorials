@@ -97,6 +97,9 @@ int main(int argc, char **argv) {
    * NodeHandle destructed will close down the node.
    */
   ros::NodeHandle n;
+  /**
+   * Declaration of service server to modify the string as in the ChangeString callback
+   */
   ros::ServiceServer server = n.advertiseService("change_string", ChangeString);
 
 
