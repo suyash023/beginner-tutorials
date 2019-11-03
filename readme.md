@@ -37,4 +37,14 @@ rqt_console
 ```
 to view the ros messages being passed.
 
+## Calling the ROS service
+
+With launch file runnin in a terminal, open a new terminal. Navigate to the catkin_ws directory and source the setup.bash file as in the above steps.
+Then run the following command
+
+```
+rosservice call /change_string Hello!
+```
+Expected response is the attachment of the time stamp to the string Hello! passed as an argument. The string can be changed.
+
 
