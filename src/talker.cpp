@@ -10,11 +10,38 @@
  *  and function members sections for detailed documentation
  */
 #include <sstream>
+#include <string>
+#include "boost/date_time.hpp"
 #include "ros/ros.h"
 #include "std_msgs/String.h"
+#include "beginner_tutorials/change_string.h"
 
 
 
+/**
+ * @brief call back function for service to change the base string
+ * @param req res the request and response that is received and sent by the service
+ * @return bool true if the service was called and response was sent, false otherwise
+ */
+bool ChangeString( beginner_tutorials::change_string::Request &req,
+         beginner_tutorials::change_string::Response &res) {
+    std::string inputToChange = req.input;
+    std::stringstream ss;
+    boost::posix_time::ptime timeLocal = boost::posix_time::second_clock::
+                                           local_time();
+    if ( inputToChange.size() > 0 ) {
+        ROS_INFO_STREAM("The input string to service was: " << inputToChange);
+        ss << inputToChange << "on " << timeLocal;
+        ROS_INFO_STREAM("Responding with date and time: " << ss.str());
+        res.output = ss.str();
+        ROS_DEBUG_STREAM("The string size was: " << inputToChange.size());
+        return true;
+    } else {
+        ROS_FATAL_STREAM("The request string was empty!");
+        ROS_DEBUG_STREAM("The string size was 0");
+        return false;
+    }
+}
 /**
  * @brief This tutorial demonstrates simple sending of messages over the ROS system.
  */
@@ -56,7 +83,8 @@ int main(int argc, char **argv) {
    * buffer up before throwing some away.
    */
   ros::Publisher chatter_pub = n.advertise<std_msgs::String>("chatter", 1000);
-
+  ros::ServiceServer server = n.advertiseService("change_string", ChangeString);
+  ROS_INFO("Modified string");
   ros::Rate loop_rate(10);
 
   /**
