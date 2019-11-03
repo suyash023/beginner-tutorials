@@ -33,6 +33,7 @@ int main(int argc, char **argv) {
    * You must call one of the versions of ros::init() before using any other
    * part of the ROS system.
    */
+  int frequency = 10;
   ros::init(argc, argv, "talker");
 
   /**
@@ -44,6 +45,8 @@ int main(int argc, char **argv) {
   ros::ServiceClient client = n.serviceClient<beginner_tutorials::
                               change_string>("change_string");
   beginner_tutorials::change_string srv;
+  ROS_INFO_STREAM("Frequency is: " << atoi(argv[1]));
+  frequency = atoi(argv[1]);
   /**
    * The advertise() function is how you tell ROS that you want to
    * publish on a given topic name. This invokes a call to the ROS
@@ -63,7 +66,7 @@ int main(int argc, char **argv) {
    */
   ros::Publisher chatter_pub = n.advertise<std_msgs::String>("chatter", 1000);
   ROS_INFO("Modified string");
-  ros::Rate loop_rate(10);
+  ros::Rate loop_rate(frequency);
 
   /**
    * A count of how many messages we have sent. This is used to create
@@ -80,13 +83,13 @@ int main(int argc, char **argv) {
     ss << "Hello to everyone in ENPM 808X! " << count;
     srv.request.input = ss.str();
     if ( client.call(srv) ) {
-        ROS_INFO_STREAM("The response was: " << srv.response.output);
+        ROS_WARN_STREAM("The response was: " << srv.response.output);
     } else {
         ROS_ERROR_STREAM("Did not get a response from the server.");
     }
     msg.data = ss.str();
 
-    ROS_INFO("%s", msg.data.c_str());
+    ROS_INFO_STREAM("Message: " << msg.data.c_str());
 
     /**
      * The publish() function is how you send messages. The parameter
