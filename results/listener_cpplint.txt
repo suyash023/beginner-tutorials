@@ -1,1 +1,5 @@
-Done processing ./catkin_ws/src/beginner_tutorials/src/listener.cpp
+Done processing src/listener.cpp
+Total errors found: 2
+src/listener.cpp:61:  Is this a non-const reference? If so, make const or use a pointer: beginner_tutorials::change_string::Request &req  [runtime/references] [2]
+src/listener.cpp:62:  Is this a non-const reference? If so, make const or use a pointer: beginner_tutorials::change_string::Response &res  [runtime/references] [2]
+

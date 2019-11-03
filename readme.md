@@ -6,7 +6,9 @@ The code in this repository is based on the ros beginner tutorials found in its 
 
 ## Dependencies for code
 
-The system runs on ROS Kinetic-kame with Ubuntu machine with packages roscpp, rospy, std_msgs installed.
+The system runs on ROS Kinetic-kame with Ubuntu machine with packages roscpp, rospy, std_msgs, message_generation installed.
+
+Additional rqt package components must also be installed to view the ros messages.
 
 ## Building the code.
 ```
@@ -18,23 +20,31 @@ catkin_make
 ```
 
 ## Running the code
-Open 3 terminals. 
 
-In terminal 1 start roscore.
-
-In terminal 2 and 3 navigate to catkin_ws directory and type,
+Source the environment of the catkin workspace.
 
 ```
 source ./devel/setup.bash
 ```
-In terminal 2 type,
+Launch the talker_listener.xml file
 ```
-rosrun beginner_tutorials talker
+roslaunch beginner_tutorials talker_listener.xml
 ```
 
-In terminal 3 type,
+Open a separate terminal and run 
 ```
-rosrun beginner_tutorials listener
+rqt_console 
 ```
+to view the ros messages being passed.
+
+## Calling the ROS service
+
+With launch file runnin in a terminal, open a new terminal. Navigate to the catkin_ws directory and source the setup.bash file as in the above steps.
+Then run the following command
+
+```
+rosservice call /change_string Hello!
+```
+Expected response is the attachment of the time stamp to the string Hello! passed as an argument. The string can be changed.
 
 

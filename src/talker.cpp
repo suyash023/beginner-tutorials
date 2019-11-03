@@ -1,17 +1,49 @@
 /**
+ * BSD 3-Clause License
+ *
+ * Copyright (c) 2019 Suyash Yeotikar
+ * All rights reserved.
+ *
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions are met:
+ *
+ * 1. Redistributions of source code must retain the above copyright notice, this
+ *   list of conditions and the following disclaimer.
+ *
+ * 2. Redistributions in binary form must reproduce the above copyright notice,
+ *  this list of conditions and the following disclaimer in the documentation
+ *  and/or other materials provided with the distribution.
+ *
+ * 3. Neither the name of the copyright holder nor the names of its
+ *   contributors may be used to endorse or promote products derived from
+ *   this software without specific prior written permission.
+ *
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+ * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+ * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+ * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE
+ * FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+ * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
+ * SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
+ * CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
+ * OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+ * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
  *  @file talker.cpp
  *  @date Oct 26, 2019
  *  @author Suyash Yeotikar
  *  @brief main file
- *  Copyright 2019 Suyash Yeotikar  [legal/copyright]
  *  @mainpage project page
  *  Please refer the talker.cpp file in file section
  *  and function members sections for detailed documentation
  */
 #include <sstream>
+#include <string>
+#include "boost/date_time.hpp"
 #include "ros/ros.h"
 #include "std_msgs/String.h"
+#include "beginner_tutorials/change_string.h"
+
 
 
 
@@ -29,6 +61,7 @@ int main(int argc, char **argv) {
    * You must call one of the versions of ros::init() before using any other
    * part of the ROS system.
    */
+  int frequency = 10;
   ros::init(argc, argv, "talker");
 
   /**
@@ -37,7 +70,21 @@ int main(int argc, char **argv) {
    * NodeHandle destructed will close down the node.
    */
   ros::NodeHandle n;
-
+  /**
+   * Declaration of the client on the talker side to receive the updated string through request response
+   * paradigm of the server to modify the string
+   */
+  ros::ServiceClient client = n.serviceClient<beginner_tutorials::
+                              change_string>("change_string");
+  /**
+   * Decalaration of the service obj with request and response as in the srv file
+   */
+  beginner_tutorials::change_string srv;
+  ROS_INFO_STREAM("Frequency is: " << atoi(argv[1]));
+  /**
+   * Get frequency of talker as a command line argument.
+   */
+  frequency = atoi(argv[1]);
   /**
    * The advertise() function is how you tell ROS that you want to
    * publish on a given topic name. This invokes a call to the ROS
@@ -56,8 +103,8 @@ int main(int argc, char **argv) {
    * buffer up before throwing some away.
    */
   ros::Publisher chatter_pub = n.advertise<std_msgs::String>("chatter", 1000);
-
-  ros::Rate loop_rate(10);
+  ROS_INFO("Modified string");
+  ros::Rate loop_rate(frequency);
 
   /**
    * A count of how many messages we have sent. This is used to create
@@ -72,9 +119,15 @@ int main(int argc, char **argv) {
 
     std::stringstream ss;
     ss << "Hello to everyone in ENPM 808X! " << count;
+    srv.request.input = ss.str();
+    if ( client.call(srv) ) {
+        ROS_WARN_STREAM("The response was: " << srv.response.output);
+    } else {
+        ROS_ERROR_STREAM("Did not get a response from the server.");
+    }
     msg.data = ss.str();
 
-    ROS_INFO("%s", msg.data.c_str());
+    ROS_INFO_STREAM("Message: " << msg.data.c_str());
 
     /**
      * The publish() function is how you send messages. The parameter
