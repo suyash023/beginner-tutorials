@@ -6,7 +6,7 @@ The code in this repository is based on the ros beginner tutorials found in its 
 
 ## Dependencies for code
 
-The system runs on ROS Kinetic-kame with Ubuntu machine with packages roscpp, rospy, std_msgs installed.
+The system runs on ROS Kinetic-kame with Ubuntu machine with packages roscpp, rospy, std_msgs, message_generation installed.
 
 ## Building the code.
 ```
@@ -18,23 +18,15 @@ catkin_make
 ```
 
 ## Running the code
-Open 3 terminals. 
 
-In terminal 1 start roscore.
-
-In terminal 2 and 3 navigate to catkin_ws directory and type,
+Source the environment of the catkin workspace.
 
 ```
 source ./devel/setup.bash
 ```
-In terminal 2 type,
+Launch the talker_listener.xml file
 ```
-rosrun beginner_tutorials talker
-```
-
-In terminal 3 type,
-```
-rosrun beginner_tutorials listener
+roslaunch beginner_tutorials talker_listener.xml
 ```
 
 
