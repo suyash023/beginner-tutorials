@@ -8,6 +8,8 @@ The code in this repository is based on the ros beginner tutorials found in its 
 
 The system runs on ROS Kinetic-kame with Ubuntu machine with packages roscpp, rospy, std_msgs, message_generation installed.
 
+Additional rqt package components must also be installed to view the ros messages.
+
 ## Building the code.
 ```
 mkdir -p catkin_ws/src
@@ -28,5 +30,11 @@ Launch the talker_listener.xml file
 ```
 roslaunch beginner_tutorials talker_listener.xml
 ```
+
+Open a separate terminal and run 
+```
+rqt_console 
+```
+to view the ros messages being passed.
 
 
