@@ -29,8 +29,8 @@
  * OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- *  @file talker.cpp
- *  @date Oct 26, 2019
+ *  @file tf_test.cpp
+ *  @date Nov 11, 2019
  *  @author Suyash Yeotikar
  *  @brief main file
  *  @mainpage project page
@@ -45,6 +45,9 @@
 #include "ros/ros.h"
 #include "tf/transform_listener.h"
 
+/**
+ * @brief test to check if the translation from /world to /talker is correct
+ */
 
 TEST(TfTest, tfTestTranslation) {
     tf::TransformListener listener;
@@ -58,6 +61,10 @@ TEST(TfTest, tfTestTranslation) {
     ASSERT_EQ(origin.y(), 10);
 }
 
+
+/**
+ * @brief test to check if the rotation from world to talker is correct.
+ */
 TEST(TfTest, tfTestRotation) {
     tf::TransformListener listener;
     tf::StampedTransform trans;

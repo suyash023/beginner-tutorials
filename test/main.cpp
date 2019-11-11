@@ -29,7 +29,7 @@
  * OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- *  @file talker.cpp
+ *  @file main.cpp
  *  @date Oct 26, 2019
  *  @author Suyash Yeotikar
  *  @brief main file
@@ -40,6 +40,9 @@
 #include <gtest/gtest.h>
 #include "ros/ros.h"
 
+/**
+ * @brief main function to execute ros node and tests
+ */
 
 int main(int argc, char **argv) {
     ros::init(argc, argv, "tf_test");
