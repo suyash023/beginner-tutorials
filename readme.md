@@ -6,7 +6,9 @@ The code in this repository is based on the ros beginner tutorials found in its 
 
 ## Dependencies for code
 
-The system runs on ROS Kinetic-kame with Ubuntu machine with packages roscpp, rospy, std_msgs, message_generation installed.
+The system runs on ROS Kinetic-kame with Ubuntu machine with packages roscpp, rospy, std_msgs, message_generation, tf installed.
+
+The code also additionally uses the boost library
 
 Additional rqt package components must also be installed to view the ros messages.
 
@@ -19,6 +21,17 @@ cd ../..
 catkin_make
 ```
 
+## Building and running the tests.
+Go to the catkin_ws folder in a terminal and type:
+```
+catkin_make tests
+```
+To run and build tests you can also type:
+
+```
+catkin_make test
+```
+
 ## Running the code
 
 Source the environment of the catkin workspace.
@@ -26,9 +39,9 @@ Source the environment of the catkin workspace.
 ```
 source ./devel/setup.bash
 ```
-Launch the talker_listener.xml file
+Launch the talker_listener.launch file
 ```
-roslaunch beginner_tutorials talker_listener.xml
+roslaunch beginner_tutorials talker_listener.launch
 ```
 
 Open a separate terminal and run 
@@ -36,6 +49,46 @@ Open a separate terminal and run
 rqt_console 
 ```
 to view the ros messages being passed.
+
+## Inspecting if tf frames are being published
+
+To inspect if tf frames are working properly run the following command in a different terminal:
+```
+rosrun rqt_tf_tree rqt_tf_tree
+```
+A gui opens showing two frames /world and /talker. Check if they are visible and appropriate values are being published.
+
+To save the tf tree in a pdf use the following command:
+```
+view_frames
+```
+## To record bag files
+
+To record the data published on /chatter topic in a bag file pass an argument record:=true to the roslaunch command as follows
+```
+roslaunch beginner_tutorials talker_listener.launch record:=true
+```
+This creates a bag file in the ~/.ros/log folder.
+to move the file use the following commnd with appropriate arguments
+```
+mv ~/.ros/log/(bag_file_name).bag (catkin_ws folder location)
+```
+## To play the bag files
+To replay the recorded bag files use the following command:
+
+First start roscore in a different terminal
+```
+roscore
+```
+Then run following command:
+```
+rosbag play results/2019-11-11-02-01-12.bag
+```
+Immediately in a following terminal start listener node using the following command
+```
+rosrun beginner_tutorials listener
+```
+You will see the messages captured being printed by the listener.
 
 ## Calling the ROS service
 
