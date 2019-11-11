@@ -124,7 +124,7 @@ int main(int argc, char **argv) {
     tf::Quaternion 	q;
     q.setRPY(0, 0, M_PI/3);
     transform.setRotation(q);
-    std::cout << "Set rotation!" << std::endl;
+    ROS_INFO_STREAM("Set rotation!");
     br.sendTransform(tf::StampedTransform(transform, ros::Time::now(), "world", "talker"));
     std::stringstream ss;
     ss << "Hello to everyone in ENPM 808X! " << count;
