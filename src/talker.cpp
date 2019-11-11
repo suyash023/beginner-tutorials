@@ -62,7 +62,6 @@ int main(int argc, char **argv) {
    * You must call one of the versions of ros::init() before using any other
    * part of the ROS system.
    */
-  std::cout << "Lol!" <<std::endl;
   int frequency = 10;
   ros::init(argc, argv, "talker");
 
