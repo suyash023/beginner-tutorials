@@ -10,6 +10,8 @@ The system runs on ROS Kinetic-kame with Ubuntu machine with packages roscpp, ro
 
 The code also additionally uses the boost library
 
+To build tests gtest and rostest are required
+
 Additional rqt package components must also be installed to view the ros messages.
 
 ## Building the code.
