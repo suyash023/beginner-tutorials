@@ -2,6 +2,5 @@
 	<arg name = "frequency" default = "5" />
 	<node name = "listener1" pkg="beginner_tutorials" type = "listener"  />
 	<node name = "talker1" pkg="beginner_tutorials" type = "talker" args = "$(arg frequency)"/>
-	<test test-name="tf_test" pkg="beginner_tutorials" type="tf_test" />
 </launch> 
 
