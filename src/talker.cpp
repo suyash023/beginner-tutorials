@@ -39,11 +39,12 @@
  */
 #include <sstream>
 #include <string>
+#include <math.h>
 #include "boost/date_time.hpp"
 #include "ros/ros.h"
 #include "std_msgs/String.h"
 #include "beginner_tutorials/change_string.h"
-
+#include "tf/transform_broadcaster.h"
 
 
 
@@ -61,6 +62,7 @@ int main(int argc, char **argv) {
    * You must call one of the versions of ros::init() before using any other
    * part of the ROS system.
    */
+  std::cout << "Lol!" <<std::endl;
   int frequency = 10;
   ros::init(argc, argv, "talker");
 
@@ -111,12 +113,20 @@ int main(int argc, char **argv) {
    * a unique string for each message.
    */
   int count = 0;
+
+  tf::TransformBroadcaster br;
   while (ros::ok()) {
     /**
      * This is a message object. You stuff it with data, and then publish it.
      */
     std_msgs::String msg;
-
+    tf::Transform transform;
+    transform.setOrigin(tf::Vector3(10, 10, 0.0));
+    tf::Quaternion 	q;
+    q.setRPY(0, 0, M_PI/3);
+    transform.setRotation(q);
+    std::cout << "Set rotation!" << std::endl;
+    br.sendTransform(tf::StampedTransform(transform, ros::Time::now(), "world", "talker"));
     std::stringstream ss;
     ss << "Hello to everyone in ENPM 808X! " << count;
     srv.request.input = ss.str();
