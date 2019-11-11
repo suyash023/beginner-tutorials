@@ -197,6 +197,7 @@ include_directories(
 #   target_link_libraries(${PROJECT_NAME}-test ${PROJECT_NAME})
 # endif()
 
+
 ## Add folders to be run by python nosetests
 # catkin_add_nosetests(test)
 add_executable(talker src/talker.cpp)
@@ -206,3 +207,22 @@ add_dependencies(talker beginner_tutorials_generate_messages_cpp)
 add_executable(listener src/listener.cpp)
 target_link_libraries(listener ${catkin_LIBRARIES})
 add_dependencies(listener beginner_tutorials_generate_messages_cpp)
+
+
+if(CATKIN_ENABLE_TESTING)
+	find_package(rostest REQUIRED)
+	add_rostest_gtest(
+		tf_test
+	    launch/talker_listener.launch  
+		test/tf_test.cpp 
+		test/main.cpp
+	)
+	target_link_libraries(
+		tf_test
+		${catkin_LIBRARIES}
+	)
+	add_dependencies(
+	tf_test
+	talker
+	)
+endif()
