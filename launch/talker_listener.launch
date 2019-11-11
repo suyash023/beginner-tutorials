@@ -1,6 +1,8 @@
 <launch>
 	<arg name = "frequency" default = "5" />
+	<arg name = "record" default = "false"/>
 	<node name = "listener1" pkg="beginner_tutorials" type = "listener"  />
 	<node name = "talker1" pkg="beginner_tutorials" type = "talker" args = "$(arg frequency)"/>
+	<node name = "recorder" pkg = "rosbag" type = "record" args = "/chatter" if = "$(arg record)" /> 
 </launch> 
 
