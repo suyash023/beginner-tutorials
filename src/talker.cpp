@@ -37,9 +37,9 @@
  *  Please refer the talker.cpp file in file section
  *  and function members sections for detailed documentation
  */
+#include <math.h>
 #include <sstream>
 #include <string>
-#include <math.h>
 #include "boost/date_time.hpp"
 #include "ros/ros.h"
 #include "std_msgs/String.h"
@@ -121,11 +121,12 @@ int main(int argc, char **argv) {
     std_msgs::String msg;
     tf::Transform transform;
     transform.setOrigin(tf::Vector3(10, 10, 0.0));
-    tf::Quaternion 	q;
+    tf::Quaternion q;
     q.setRPY(0, 0, M_PI/3);
     transform.setRotation(q);
     ROS_INFO_STREAM("Set rotation!");
-    br.sendTransform(tf::StampedTransform(transform, ros::Time::now(), "world", "talker"));
+    br.sendTransform(tf::StampedTransform(transform,
+            ros::Time::now(), "world", "talker"));
     std::stringstream ss;
     ss << "Hello to everyone in ENPM 808X! " << count;
     srv.request.input = ss.str();
